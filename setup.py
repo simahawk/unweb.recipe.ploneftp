@@ -13,14 +13,14 @@ version = '0.1'
 long_description = (
     read('README.txt')
     + '\n' +
-    'Contributors\n' 
+    'Contributors\n'
     '************\n'
     + '\n' +
     read('CONTRIBUTORS.txt')
     + '\n' +
     'Change history\n'
     '**************\n'
-    + '\n' + 
+    + '\n' +
     read('CHANGES.txt')
     + '\n' +
    'Download\n'
@@ -56,6 +56,7 @@ setup(name='unweb.recipe.ploneftp',
                         # -*- Extra requirements: -*-
                         'pyftpdlib',
                         'zc.recipe.egg',
+                        'plone.i18n',
                         ],
       tests_require=tests_require,
       extras_require=dict(tests=tests_require),
