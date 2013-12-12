@@ -232,15 +232,17 @@ class ZopeHandler(ftpserver.FTPHandler):
                                   % (filename))
 
                 except ftplib.all_errors, detail:
-                    ftpserver.log("Error sending filename %s \
-                                  to Zope FTP server \
-                                   %s with username %s : %s"
-                                  % (filename, self.config.zope_ftp_address,
-                                     self.username,  detail))
+                    ftpserver.log("Error sending filename %s"
+                                  "to Zope FTP server"
+                                  "%s with username %s : %s"
+                                  % (filename,
+                                     self.config.zope_ftp_address,
+                                     self.username,
+                                     detail))
                 except IOError, detail:
-                    ftpserver.log("Error opening local filename %s \
-                                  for sending to \
-                                  Zope FTP : %s" % (filename, detail))
+                    ftpserver.log("Error opening local filename %s"
+                                  "for sending to"
+                                  "Zope FTP : %s" % (filename, detail))
             finally:
                 zopeftp.close()
                 try:
@@ -250,9 +252,9 @@ class ZopeHandler(ftpserver.FTPHandler):
 
                 # schedule filename(s) to be deleted when user logs out
                 global FilesToDelete, DeleteThreadLock
-                ftpserver.log("Setting %s from user %s \
-                              to be deleted \
-                              when user logs out" % (filename, self.username))
+                ftpserver.log("Setting %s from user %s"
+                              "to be deleted"
+                              "when user logs out" % (filename, self.username))
                 DeleteThreadLock.acquire()
                 if self.username not in FilesToDelete:
                     FilesToDelete[self.username] = []
@@ -266,13 +268,20 @@ class ZopeHandler(ftpserver.FTPHandler):
 
 def main(args):
     config = imp.load_source(
-        'config', os.path.join(os.environ["PLONEFTP_ROOT"], "config.py"))
+        'config',
+        os.path.join(os.environ["PLONEFTP_ROOT"], "config.py")
+    )
     authorizer = ZopeAuthorizer(
-        config.tmp_dir, config.zope_ftp_address.split(
-            ':')[0], config.zope_ftp_address.split(':')[1],
-        config.path, config.login_message, config.logout_message)
+        config.tmp_dir,
+        config.zope_ftp_address.split(':')[0],
+        config.zope_ftp_address.split(':')[1],
+        config.path,
+        config.login_message,
+        config.logout_message
+    )
     ftp_handler = ZopeHandler
     ftp_handler.authorizer = authorizer
-    address = (config.address.split(':')[0], config.address.split(':')[1])
+    address = (config.address.split(':')[0],
+               config.address.split(':')[1])
     ftpd = ftpserver.FTPServer(address, ftp_handler)
     ftpd.serve_forever()
